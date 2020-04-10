@@ -1,0 +1,17 @@
+This c program can be used to evolve mildly-hierarchical three body systems under secular approximation. It can evolve a three body system in which a central object of mass (m=1) is being orbited by a test particle(mass=0) and a perturber of mass m2. While the orbit of the perturber is constant, orbital elements of the test particle are evolved using a double averaged hamiltonian. The main program file is called  "gda_three_body.c". It can be compiled using:
+		gcc gda_three_body.c -lm -lgsl -lgslcblas -o gda3bd
+This program uses GNU Scientific Library(GSL). You need to install it to compile and run the program. See https://www.gnu.org/software/gsl/ for details. The compiled binary can be run using:
+		./gda3bd IC1.txt 1 outputfile.txt 100
+The first argument is the input file which contains the initial orbital parameters of the test particle and the perturber(see below). The second argument is the line number of the input file which corresponds to the test particle which needs to be simulated. The third argument is the name of the output file to which the program will write it's output. The fourth argument is the end time(in years). 
+This program expects the input file to provide initial conditions for the test particle in the following format:
+*********************************************IC FILE FORMAT***************************************************
+<HEADER>
+<a2>	<J2>	<Jz2>	<omega2>	<Omega2>	<m2>
+<HEADER>
+<a1>	<J1>	<Jz1>	<omega1>	<Omega1>
+		:
+		:
+		:
+<a1>	<J1>	<Jz1>	<omega1>	<Omega1>
+**************************************************************************************************************
+The first and the third lines are headers which are used to improve readability and are not parsed by the program. The second line contains the orbital elements of the perturber. The first argument is the semi-major axis(in AU) followed by J2=sqrt(1-(e2*e2)), Jz2=cos(i2)*sqrt(1-(e2*e2)), argument of pericenter, longitude of ascending node and mass(in solar masses)(e2 is the eccentricity and i2 is the inclination of the perturber).  They can be separated by spaces or tabs. All angles should be in radians. Line 4 and all the lines which follow it contain the orbital elements of the test particles. The first argument is the semi-major axis(in AU) followed by J1=sqrt(1-(e1*e1)), Jz1=cos(i1)*sqrt(1-(e1*e1)), argument of pericenter and longitude of ascending node (e1 is the eccentricity and i1 is the inclination  of the test-particle)  The program parses only one of these lines. To specify which line the program should parse use the second command line argument(see above). Please see the sample input file "IC1.txt".
