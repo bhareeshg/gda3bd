@@ -647,35 +647,39 @@ int main (int argc, char* argv[])
 
 	int i;
 	
-	if(argc!=5)
+	if(argc!=4)
 	{
 		printf("number of arguments: %d/4\n",argc-1);
-		printf("usage: ./a.out <IC file name> <IC line number> <outputfile name> <end time>\n");
+		printf("usage: ./a.out <IC file name> <outputfile name> <end time>\n");
 		return 0;
 	}
 
 	char *inp_fname=argv[1];
-	int n=atoi(argv[2]);
-	char *out_fname=argv[3];
-	double end_time=atof(argv[4]);
+	char *out_fname=argv[2];
+	double end_time=atof(argv[3]);
 
 	char line[512];
 	abs_int_err=1e-10;rel_int_err=1e-5;
 
+	double e2,i2,e1,i1;
+	
 	FILE* inp_fp = fopen(inp_fname, "r");
 	FILE *out_fp=fopen(out_fname,"w");
-	if(n==0)
-		return 0;
-	fgets(line,sizeof(line), inp_fp);
-	fgets(line,sizeof(line), inp_fp);
-	sscanf(line,"%lf	%lf	%lf	%lf	%lf	%lf\n",&a2,&J2,&Jz2,&omega2,&Om2,&m2);
-	fgets(line,sizeof(line),inp_fp);
 	
-	for(i=1;i<=n;i++)
-		fgets(line,sizeof(line),inp_fp);
+	
+	fgets(line,sizeof(line), inp_fp);
+	fgets(line,sizeof(line), inp_fp);
+	sscanf(line,"%lf	%lf	%lf	%lf	%lf	%lf\n",&a2,&e2,&i2,&omega2,&Om2,&m2);
+	J2=sqrt(1-(e2*e2));
+	Jz2=J2*cos(i2);
+
+	fgets(line,sizeof(line),inp_fp);
+	fgets(line,sizeof(line),inp_fp);
 	double y[4],ty[4];
 	double iH1;
-	sscanf(line,"%lf	%lf	%lf	%lf	%lf",&a1,y,y+1,y+2,y+3);
+	sscanf(line,"%lf	%lf	%lf	%lf	%lf",&a1,&e1,&i1,y+2,y+3);
+	y[0]=sqrt(1-(e1*e1));	
+	y[1]=sqrt(1-(e1*e1))*cos(i1);
 
 	if(y[1]<0)
 		y[1]*=-1;
@@ -717,11 +721,11 @@ int main (int argc, char* argv[])
 	curDist=fabs(dplus)<fabs(dminus)?dplus:dminus;
 	
 	
-	fprintf(out_fp,"a1	a2	J2	Jz2	omega2	Omega2	m2\n");
-	fprintf(out_fp,"%lf	%lf	%lf	%lf	%lf	%lf	%lf\n",a1,a2,J2,Jz2,omega2,Om2,m2);
+	fprintf(out_fp,"a1	a2	e2	i2	omega2	Omega2	m2\n");
+	fprintf(out_fp,"%lf	%lf	%lf	%lf	%lf	%lf	%lf\n",a1,a2,sqrt(1-(J2*J2)),acos(Jz2/J2),omega2,Om2,m2);
 
-	fprintf(out_fp,"time,J,Jz,omega,Omega,H,dplus,dminus\n");	
-	fprintf (out_fp,"%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e\n", t, y[0], y[1],y[2],y[3],cH,dplus,dminus);
+	fprintf(out_fp,"time,e,i,omega,Omega,H,dplus,dminus\n");	
+	fprintf (out_fp,"%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e\n", t, sqrt(1-(y[0]*y[0])), acos(y[1]/y[0]),y[2],y[3],cH,dplus,dminus);
 	i=0;
 	double rv[4];
 	//printf("starting loop\n");
@@ -763,7 +767,7 @@ int main (int argc, char* argv[])
 			i++;
 			y[0]=ty[0];y[1]=ty[1];y[2]=ty[2];y[3]=ty[3];
 			//if(i%10==0)
-			fprintf (out_fp,"%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e\n", t, y[0], y[1],y[2],y[3],cH,dplus,dminus);
+			fprintf (out_fp,"%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e\n", t, sqrt(1-(y[0]*y[0])),acos(y[1]/y[0]),y[2],y[3],cH,dplus,dminus);
 			fflush(out_fp);
 			//printf ("%.15e	%.15e	%.15e	%.15e	%.15e	%.15e	%.15e	%.15e\n", t, y[0], y[1],y[2],y[3],cH,dplus,dminus);
 			h=1;
