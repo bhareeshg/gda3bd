@@ -24,8 +24,7 @@ The first argument is the input file which contains the initial orbital paramete
 
 This program expects the input file to provide initial conditions for the test particle in the following format:
 
-*********************************************IC FILE FORMAT***************************************************
-
+---
 <HEADER>
         
 <a2>	<e2>	<i2>	<omega2>	<Omega2>	<m2>
@@ -33,9 +32,8 @@ This program expects the input file to provide initial conditions for the test p
 <HEADER>
         
 <a1>	<e1>	<i1>	<omega1>	<Omega1>
-        
-**************************************************************************************************************
 
+---
 The first and the third lines are headers which are used to improve readability and are not parsed by the program. The second line contains the orbital elements of the perturber. The first argument is the semi-major axis(in AU) followed by e2, i2, argument of pericenter, longitude of ascending node and mass(in solar masses)(e2 is the eccentricity and i2 is the inclination of the perturber).  They can be separated by spaces or tabs. All angles should be in radians. Line 4 contains the orbital elements of the test particles. The first argument is the semi-major axis(in AU) followed by e1, i1, argument of pericenter and longitude of ascending node (e1 is the eccentricity and i1 is the inclination  of the test-particle). Please see the sample input file "IC1.txt". 
 
 
@@ -43,8 +41,7 @@ The first and the third lines are headers which are used to improve readability 
 
 The format for the output file is given below:
 
-*********************************************OUTPUT FILE FORMAT***************************************************
-
+---
 <HEADER>
         
 <a1>	<a2>	<e2>	<i2>	<omega2>	<Omega2>	<m2>
@@ -59,8 +56,7 @@ The format for the output file is given below:
                 
 <time>,<e>,<i>,<omega>,<Omega>,<H>,<dplus>,<dminus>
         
-**************************************************************************************************************
-
+---
 The first and the third lines are headers. The second line contains the configuration of the system. It contains semi-major axis of the test-particle, semi-major axis, eccentricity, inclination, argument of pericenter, longitude of ascending node and the mass of the pertuber(in solar masses). From Line 4 till the end of the file, output of the simulation is printed. Each line contains time, eccentricity, inclination, argument of pericenter and longitude of ascending node of the test particle as well as the value of the hamiltonian and the closest distance between the test-particle's orbit and perturber's orbit.  
 
 
@@ -75,15 +71,26 @@ Plots will be stored in the file named "trajectory.pdf"
 Following are the brief descriptions of various files in the directory:
 
 1.gda_three_body.c
+
   The main file which contains all the code to calculate hamiltonian and it's derivatives.
+  
 2.gHenon.c
+
   This file contains code to implement henon's method. This is used to resolve orbital crossings.
+  
 3.gSL2cquad.c
+
   This file contains code to calculate double integral used in hamiltonian calculation. It uses GSL's CQUAD method.
+  
 4.gJmatrix.c
+
   This file contains code to calculate jacobian of the Hamiltonian.
+  
 5.gStack3.c
+
   This file contains code to implement timestep mechanism during crossings.
+  
 6.plot_traj.py
+
   Python file to plot the trajectories.
 
