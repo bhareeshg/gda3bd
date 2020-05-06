@@ -69,22 +69,22 @@ Plots will be stored in the file named "trajectory.pdf"
 # Descriptions of Other Functions
 
 1. gda_three_body.c
-  - The main file which contains all the code to calculate hamiltonian and it's derivatives.
+  &nbsp;&nbsp;&nbsp;&nbsp;The main file which contains all the code to calculate hamiltonian and it's derivatives.
   
 2. gHenon.c
-  - This file contains code to implement henon's method. This is used to resolve orbital crossings.
+  &nbsp;&nbsp;&nbsp;&nbsp;This file contains code to implement henon's method. This is used to resolve orbital crossings.
   
 3. gSL2cquad.c
-  - This file contains code to calculate double integral used in hamiltonian calculation. It uses GSL's CQUAD method.
+  &nbsp;&nbsp;&nbsp;&nbsp;This file contains code to calculate double integral used in hamiltonian calculation. It uses GSL's CQUAD method.
   
 4. gJmatrix.c
-  - This file contains code to calculate jacobian of the Hamiltonian.
+  &nbsp;&nbsp;&nbsp;&nbsp;This file contains code to calculate jacobian of the Hamiltonian.
   
 5. gStack3.c
-  - This file contains code to implement timestep mechanism during crossings.
+  &nbsp;&nbsp;&nbsp;&nbsp;This file contains code to implement timestep mechanism during crossings.
   
 6. plot_traj.py
-  - Python file to plot the trajectories.
+  &nbsp;&nbsp;&nbsp;&nbsp;Python file to plot the trajectories.
 
 # Acknowledgement
 When you use this code or parts of this code, we would greatly appreciate a citation to Bhaskar et al. in prep
