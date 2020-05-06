@@ -25,9 +25,9 @@ The first argument is the input file which contains the initial orbital paramete
 This program expects the input file to provide initial conditions for the test particle in the following format:
 
 ---
-<HEADER>
+HEADER
         
-<a2>	<e2>	<i2>	<omega2>	<Omega2>	<m2>
+a2	e2	i2	omega2	Omega2	m2
         
 <HEADER>
         
