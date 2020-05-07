@@ -46,13 +46,13 @@ a1	a2	e2	i2	omega2	Omega2	m2
         
 HEADER
         
-time,e,i,omega,Omega,H,dplus,dminus
+time,e,i,omega,Omega,H,dmin
         
 		:
                 
 		:
                 
-time,e,i,omega,Omega,H,dplus,dminus
+time,e,i,omega,Omega,H,dmin
         
 ---
 The first and the third lines are headers. The second line contains the configuration of the system. It includes the semi-major axis of the test-particle, as well as the semi-major axis, eccentricity, inclination, argument of pericenter, longitude of ascending node and the mass of the pertuber. The units are the same as those included in the input file. Output of the simulation is printed from line 4 till the end of the file. Each line contains the time, eccentricity, inclination, argument of pericenter and longitude of ascending node of the test particle as well as the value of the hamiltonian and the closest distance between the orbits of the test-particle and the perturber.  
