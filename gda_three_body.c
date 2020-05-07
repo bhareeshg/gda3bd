@@ -692,7 +692,7 @@ int main (int argc, char* argv[])
 
 	//a1*=1000;
 	//a2*=1000;
-	double cH,dplus,dminus,dcur;
+	double cH,dplus,dminus,dcur,dmin;
 	double t = 0.0;
 	double k=G*m2*a1*a1/8/a2/a2/a2/J2/J2/J2;
 	double tk=sqrt(G*a1)/k;
@@ -713,6 +713,7 @@ int main (int argc, char* argv[])
 	double h=1;
 	double prevDistp,prevDistn,curDist,prevDist;
 	
+
 	updateCoefficients(y);
 	cH=hamiltorian();
 	double zerodot=dHbdJz();
@@ -724,12 +725,11 @@ int main (int argc, char* argv[])
 	fprintf(out_fp,"a1	a2	e2	i2	omega2	Omega2	m2\n");
 	fprintf(out_fp,"%lf	%lf	%lf	%lf	%lf	%lf	%lf\n",a1,a2,sqrt(1-(J2*J2)),acos(Jz2/J2),omega2,Om2,m2);
 
-	fprintf(out_fp,"time,e,i,omega,Omega,H,dplus,dminus\n");	
-	fprintf (out_fp,"%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e\n", t, sqrt(1-(y[0]*y[0])), acos(y[1]/y[0]),y[2],y[3],cH,dplus,dminus);
+	fprintf(out_fp,"time,e,i,omega,Omega,H,dmin\n");
+	dmin=fabs(dplus)<fabs(dminus)?fabs(dplus):fabs(dminus);
+	fprintf (out_fp,"%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e\n", t, sqrt(1-(y[0]*y[0])), acos(y[1]/y[0]),y[2],y[3],cH,dmin);
 	i=0;
 	double rv[4];
-	//printf("starting loop\n");
-	//fprintf (stdout,"%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e ######## _0-dot__>%e \n", t, y[0], y[1],y[2],y[3],cH,dplus,dminus,zerodot);
 
 	while(t<end_time)
 	{
@@ -747,11 +747,8 @@ int main (int argc, char* argv[])
 		dminus=dist_minus();
 		curDist=fabs(dplus)<fabs(dminus)?dplus:dminus;		
 
-		//printf ("curDist:%e	prevDist:%e	prevDistp:%e	dplus:%e	prevDistn:%e	dminus:%e\n", curDist,prevDist,prevDistp,dplus,prevDistn,dminus);
-		//fprintf (stdout,"%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e\n", t, y[0], y[1],y[2],y[3],cH,dplus,dminus);
 		if((prevDistp*dplus<0)||(prevDistn*dminus<0))
 		{
-			//printf ("STEP NEGLECTED ::: %.15e	%.15e	%.15e	%.15e	%.15e	%.15e	%.15e	%.15e\n", t, y[0], y[1],y[2],y[3],cH,dplus,dminus);
 			fflush(out_fp);
 			t=(henon_step_stack(y,t));
 			updateCoefficients(y);
@@ -759,17 +756,15 @@ int main (int argc, char* argv[])
 			dplus=dist_plus();
 			dminus=dist_minus();
 			curDist=fabs(dplus)<fabs(dminus)?dplus:dminus;	
-			//printf ("DONE HENON()()()()::: %.15e	%.15e	%.15e	%.15e	%.15e	%.15e	%.15e	%.15e\n", t, y[0], y[1],y[2],y[3],cH,dplus,dminus);
 			gsl_odeiv2_driver_reset(d);
 		}
 		else
 		{
 			i++;
 			y[0]=ty[0];y[1]=ty[1];y[2]=ty[2];y[3]=ty[3];
-			//if(i%10==0)
-			fprintf (out_fp,"%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e\n", t, sqrt(1-(y[0]*y[0])),acos(y[1]/y[0]),y[2],y[3],cH,dplus,dminus);
-			fflush(out_fp);
-			//printf ("%.15e	%.15e	%.15e	%.15e	%.15e	%.15e	%.15e	%.15e\n", t, y[0], y[1],y[2],y[3],cH,dplus,dminus);
+			
+			dmin=fabs(dplus)<fabs(dminus)?fabs(dplus):fabs(dminus);	
+			fprintf(out_fp,"%.15e,%.15e,%.15e,%.15e,%.15e,%.15e,%.15e\n", t, sqrt(1-(y[0]*y[0])),acos(y[1]/y[0]),y[2],y[3],cH,dmin);
 			h=1;
 		}
 		if(i%50==0)
