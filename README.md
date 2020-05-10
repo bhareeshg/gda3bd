@@ -1,6 +1,6 @@
 # Introduction
 
-This c program can be used to evolve mildly-hierarchical three body systems under secular approximation. It can evolve a three body system in which a central object of mass (m=1) is being orbited by a test particle(mass=0) and a perturber of mass m2. While the orbit of the perturber is constant, orbital elements of the test particle are evolved using a double averaged hamiltonian. Please see Bhaskar et al. in prep for more details about the integration methods and the reliability of the double average method.
+This c program can be used to evolve mildly-hierarchical three body systems under secular approximation. It can evolve a three body system in which a central object of mass (m=1) is being orbited by a test particle(mass=0) and a perturber of mass m2. While the orbit of the perturber is constant, orbital elements of the test particle are evolved using a double averaged hamiltonian. Please see Bhaskar et al. in prep for more details about the integration methods and the reliability of the double average method. This work is supported by NASA grant: 80NSSC20K0641.
 
 # Compile
 
@@ -87,4 +87,4 @@ Plots will be stored in the file named "trajectory.pdf"
   &nbsp;&nbsp;&nbsp;&nbsp;Python file to plot the trajectories.
 
 # Acknowledgement
-When you use this code or parts of this code, we would greatly appreciate a citation to Bhaskar et al. in prep
+When you use this code or parts of this code, we would greatly appreciate a citation to Bhaskar et al. in prep. This work is supported by NASA grant: 80NSSC20K0641.
