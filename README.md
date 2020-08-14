@@ -14,9 +14,9 @@ This program uses GNU Scientific Library(GSL). You need to install it to compile
 
 The compiled binary can be run using:
 
-		./gda3bd input_file 1 output_file integration_time
+		./gda3bd input_file output_file integration_time
                 
-You may try “./gda3bd IC1.txt 1 outputfile.txt 100” for a simple example.
+You may try “./gda3bd IC1.txt outputfile.txt 100” for the sample example provided in the repository.
 		
 # Input file		
 
