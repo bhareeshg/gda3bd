@@ -87,4 +87,4 @@ Plots will be stored in the file named "trajectory.pdf"
   &nbsp;&nbsp;&nbsp;&nbsp;Python file to plot the trajectories.
 
 # Acknowledgement
-When you use this code or parts of this code, we would greatly appreciate a citation to Bhaskar et al. submitted. This work is supported by NASA grant: 80NSSC20K0641 and 80NSSC20K0522.
+When you use this code or parts of this code, we would greatly appreciate a citation to Bhaskar et al. submitted (arXiv: 2008.04335). This work is supported by NASA grant: 80NSSC20K0641 and 80NSSC20K0522.
